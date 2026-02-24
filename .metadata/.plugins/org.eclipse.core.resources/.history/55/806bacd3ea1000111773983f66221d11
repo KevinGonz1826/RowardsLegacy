@@ -1,0 +1,69 @@
+package rowardsLegacy;
+
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Escuela {
+	Scanner sc = new Scanner(System.in);
+	HashMap<String, Mago> escuela;
+	
+	
+	public void mostrarMagos() {
+		for(Mago m : escuela.values()) {
+			System.out.println(m.toString());
+		}
+	}
+	
+	
+	public void obtenerMago(String nombre) {
+		Mago m = escuela.get(nombre);
+		
+		if(m == null) {
+			System.out.println("El mago llamado " + nombre + " no existe");
+			return;
+		}
+		System.out.println(m.toString());
+	}
+	
+	
+	public void anadirMago() {
+		Mago mago = null;
+		
+		System.out.println("Nombre: ");
+		String nombre = sc.nextLine();
+		
+		System.out.println("Vida: ");
+		int v = sc.nextInt();
+		
+		System.out.println("Afinidad: ");
+		int a = sc.nextInt();
+		
+		System.out.println("Resistencia: ");
+		int r = sc.nextInt();
+		
+		System.out.println("Plomo: ");
+		double p = sc.nextDouble();
+		
+		System.out.println("Orden: ");
+		String orden = sc.nextLine();
+		
+		switch(orden) {
+			case "Meeplepuf":
+				System.out.println("Ingresa la eficiencia(entre 0-100): ");
+				int eficiencia = sc.nextInt();
+				if(!(eficiencia >= 0) && !(eficiencia <= 100)) {
+					System.out.println("La eficiencia no puede ser menos de 0 ni mas de 100");
+					break;
+				}
+				
+				System.out.println("Ingresa el honor: ");
+				int honor = sc.nextInt();
+				if(!(honor >= 0) && !(honor <= 100)) {
+					System.out.println("La eficiencia no puede ser menos de 0 ni mas de 100");
+					break;
+				}
+				
+				mago = new Meeplepuf(nombre, v, a, r, p, eficiencia, honor);
+		}
+	}
+}

@@ -1,0 +1,13 @@
+package rowardsLegacy;
+
+public class Defensivo extends Hechizo{
+
+	public Defensivo(String nombre, String descripcion, int defensaObtenida, int ataqueCausado, int espacio, double coste) {
+		super(nombre, descripcion, defensaObtenida, ataqueCausado, espacio, coste);
+	}
+	
+	
+	public void defensaMagico(int bonificacion) {
+		
+	}
+}

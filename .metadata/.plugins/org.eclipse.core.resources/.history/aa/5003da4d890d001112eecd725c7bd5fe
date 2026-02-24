@@ -1,0 +1,16 @@
+package rowardsLegacy;
+import java.util.ArrayList;
+
+public class LibroHechizos {
+	private int paginasTotales;
+	private int paginasOcupadas;
+	private ArrayList<Hechizo> hechizos;
+	
+	public LibroHechizos(int paginasTotales, int paginasOcupadas) {
+		this.paginasTotales = paginasTotales;
+		this.paginasOcupadas = paginasOcupadas;
+		this.hechizos = new ArrayList<Hechizo>();
+	}
+	
+	
+}

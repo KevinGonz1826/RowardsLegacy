@@ -1,0 +1,6 @@
+package rowardsLegacy;
+
+public class Principal {
+	Escuela e = new Escuela();
+	
+}

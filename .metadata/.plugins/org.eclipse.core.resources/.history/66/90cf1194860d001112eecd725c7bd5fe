@@ -1,0 +1,6 @@
+package rowardsLegacy;
+
+public interface Hechizo {
+	protected String nombre;
+	protected 
+}

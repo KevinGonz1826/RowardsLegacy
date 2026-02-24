@@ -1,0 +1,9 @@
+package rowardsLegacy;
+
+public class Principal {
+	public static void main(String[] args) {
+		Escuela e = new Escuela();
+		e.anadirMago();
+		e.obtenerMago();
+	}
+}

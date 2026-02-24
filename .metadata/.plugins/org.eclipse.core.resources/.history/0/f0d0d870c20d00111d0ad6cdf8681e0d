@@ -1,0 +1,14 @@
+package rowardsLegacy;
+
+import java.io.Serializable;
+
+public class Ofensivo extends Hechizo implements Serializable{
+
+	public Ofensivo(String nombre, String descripcion, int defensaObtenida, int ataqueCausado, int espacio, double coste) {
+		super(nombre, descripcion, defensaObtenida, ataqueCausado, espacio, coste);
+	}
+	
+	public void ataqueMagico(int bonificacion) {
+		
+	}
+}

@@ -1,0 +1,18 @@
+package rowardsLegacy;
+
+public class Dicendorf extends Mago{
+	private int predisposicion;
+	private int inconsciencia;
+	private int protagonismo;
+	
+	public Dicendorf(String nombre, int vida, int afinidad, int resistencia, double plomo, int predisposicion, int inconsciencia, int protagonismo) {
+		super(nombre, vida, afinidad, resistencia, plomo);
+		this.predisposicion = predisposicion;
+		this.inconsciencia = inconsciencia;
+		this.protagonismo = protagonismo;
+	}
+	
+	public void sablazoFactura() {
+		
+	}
+}

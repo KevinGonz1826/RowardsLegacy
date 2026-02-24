@@ -1,0 +1,25 @@
+package rowardsLegacy;
+
+import java.io.Serializable;
+
+public class Sleeverin extends Mago implements Serializable{
+	private int sigilo;
+	private int venenoso;
+	private int hablarAnimales;
+	
+	public Sleeverin(String nombre, int vida, int afinidad, int resistencia, double plomo, int sigilo, int venenoso, int hablarAnimales) {
+		super(nombre, vida, afinidad, resistencia, plomo);
+		this.sigilo = sigilo;
+		this.venenoso = venenoso;
+		this.hablarAnimales = hablarAnimales;
+	}
+	
+	@Override
+	public void lanzarHechizos() {
+		
+	}
+	
+	public void misOros() {
+		
+	}
+}
