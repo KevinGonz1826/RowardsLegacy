@@ -1,6 +1,7 @@
 package rowardsLegacy;
 
 import java.io.Serializable;
+import java.util.Scanner;
 
 public class Tokenclau extends Mago implements Serializable{
 	private int arrojo;
@@ -16,6 +17,15 @@ public class Tokenclau extends Mago implements Serializable{
 	public void lanzarHechizos() {
 		
 	}
+	
+	@Override
+	public void modificarAtributos(Scanner sc) {
+		this.arrojo = Mago.pedirAtributos(sc, " el arrojo");
+		this.carisma = Mago.pedirAtributos(sc, " la carisma");
+		
+		System.out.println("Atributos establecidos correctamente");
+	}
+	
 	
 	public void losPelos() {
 		

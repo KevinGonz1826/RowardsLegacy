@@ -1,6 +1,7 @@
 package rowardsLegacy;
 
 import java.io.Serializable;
+import java.util.Scanner;
 
 public class Sleeverin extends Mago implements Serializable{
 	private int sigilo;
@@ -18,6 +19,16 @@ public class Sleeverin extends Mago implements Serializable{
 	public void lanzarHechizos() {
 		
 	}
+	
+	@Override
+	public void modificarAtributos(Scanner sc) {
+		this.sigilo = Mago.pedirAtributos(sc, " el sigilo");
+		this.venenoso = Mago.pedirAtributos(sc, " el veneno");
+		this.hablarAnimales = Mago.pedirAtributos(sc, " el habla con animales");
+		
+		System.out.println("Atributos establecidos correctamente");
+	}
+	
 	
 	public void misOros() {
 		

@@ -1,0 +1,128 @@
+package rowardsLegacy;
+
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Escuela {
+	Scanner sc = new Scanner(System.in);
+	private HashMap<String, Mago> escuela;
+	
+	public Escuela() {
+		this.escuela = new HashMap<String, Mago>();
+	}
+	
+	public void mostrarMagos() {
+		for(Mago m : escuela.values()) {
+			System.out.println(m.toString());
+		}
+	}
+	
+	
+	public void obtenerMago() {
+		System.out.println("Ingresa el nombre del mago");
+		String nombre = sc.nextLine();
+		
+		Mago m = escuela.get(nombre);
+		if(m == null) {
+			System.out.println("El mago llamado " + nombre + " no existe");
+			return;
+		}
+		System.out.println(m.toString());
+	}
+	
+	
+	public void anadirMago() {
+		Mago mago = null;
+		
+		System.out.println("Nombre: ");
+		String nombre = sc.nextLine();
+		
+		if(escuela.containsKey(nombre)) {
+			System.out.println("Ya existe un mago con el nombre " + nombre);
+		}
+		
+		System.out.println("Vida: ");
+		int v = sc.nextInt();
+		
+		System.out.println("Afinidad: ");
+		int a = sc.nextInt();
+		
+		System.out.println("Resistencia: ");
+		int r = sc.nextInt();
+		
+		System.out.println("Plomo: ");
+		double p = sc.nextDouble();
+		sc.nextLine();
+		
+		System.out.println("Orden: ");
+		String orden = sc.nextLine();
+		
+		switch(orden) {
+			case "Meeplepuf":
+				int eficiencia = Mago.pedirAtributos(sc, "la eficiencia");
+				int honor = Mago.pedirAtributos(sc, "el honor");
+				
+				mago = new Meeplepuf(nombre, v, a, r, p, eficiencia, honor);
+				System.out.println(nombre + " ha ingresado a la escuela");
+				break;
+				
+			case "Dicendorf":
+				int predisposicion = Mago.pedirAtributos(sc, "la predisposicion");
+				int inconsciencia = Mago.pedirAtributos(sc, "la inconsciencia");
+				int protagonismo = Mago.pedirAtributos(sc, "el protagonismo");
+				
+				mago = new Dicendorf(nombre, v, a, r, p, predisposicion, inconsciencia, protagonismo);
+				System.out.println(nombre + " ha ingresado a la escuela");
+				break;
+				
+			case "Tokenclau":
+				int arrojo = Mago.pedirAtributos(sc, "el arrojo");
+				int carisma = Mago.pedirAtributos(sc, "la carisma");
+				
+				mago = new Tokenclau(nombre, v, a, r, p, arrojo, carisma);
+				System.out.println(nombre + " ha ingresado a la escuela");
+				break;
+				
+			case "Sleeverin":
+				int sigilo = Mago.pedirAtributos(sc, "el sigilo");
+				int venenoso = Mago.pedirAtributos(sc, "el veneno");
+				int habla = Mago.pedirAtributos(sc, "el habla con animales");
+				mago = new Sleeverin(nombre, v, a, r, p, sigilo, venenoso, habla);
+				System.out.println(nombre + " ha ingresado a la escuela");
+				break;
+				
+			default:
+				System.out.println("Tipo de mago incorrecto");
+		}
+		escuela.put(nombre, mago);
+	}
+	
+	
+	public void eliminarMago() {
+		System.out.println("Ingresa el nombre del mago que quieres eliminar");
+		String nombre = sc.nextLine();
+		
+		if(!escuela.containsKey(nombre)) {
+			System.out.println("Este mago no existe");
+			return;
+		}
+		
+		escuela.remove(nombre);
+		System.out.println(nombre + " se ha eliminado correctamente");
+	}
+	
+	
+	public void modificarMago() {
+		System.out.println("Ingresa el nombre del mago que deseas modificar");
+		String nombre = sc.nextLine();
+		
+		Mago mago = escuela.get(nombre);
+		if(mago == null) {
+			System.out.println("Este mago no existe");
+			return;
+		}
+		
+		System.out.println("Que quieres modificar?");
+		System.out.println("1.");
+	}
+}

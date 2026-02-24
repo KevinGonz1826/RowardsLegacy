@@ -1,5 +1,6 @@
 package rowardsLegacy;
 import java.io.Serializable;
+import java.util.Scanner;
 
 public class Dicendorf extends Mago implements Serializable{
 	private int predisposicion;
@@ -18,6 +19,13 @@ public class Dicendorf extends Mago implements Serializable{
 		
 	}
 	
+	@Override
+	public void modificarAtributos(Scanner sc) {
+		this.predisposicion = Mago.pedirAtributos(sc, "la eficiencia");
+		this.inconsciencia = Mago.pedirAtributos(sc, "el honor");
+		
+	}
+	
 	public int getPredisposicion() {
 		return predisposicion;
 	}
@@ -29,4 +37,5 @@ public class Dicendorf extends Mago implements Serializable{
 	public int getProtagonismo() {
 		return protagonismo;
 	}	
+	
 }

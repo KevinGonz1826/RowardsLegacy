@@ -1,0 +1,33 @@
+package rowardsLegacy;
+import java.io.Serializable;
+import java.util.Scanner;
+
+public class Dicendorf extends Mago implements Serializable{
+	private int predisposicion;
+	private int inconsciencia;
+	private int protagonismo;
+	
+	public Dicendorf(String nombre, int vida, int afinidad, int resistencia, double plomo, int predisposicion, int inconsciencia, int protagonismo) {
+		super(nombre, vida, afinidad, resistencia, plomo);
+		this.predisposicion = predisposicion;
+		this.inconsciencia = inconsciencia;
+		this.protagonismo = protagonismo;
+	}
+	
+	@Override
+	public void lanzarHechizos() {
+		
+	}
+	
+	public int getPredisposicion() {
+		return predisposicion;
+	}
+
+	public int getInconsciencia() {
+		return inconsciencia;
+	}
+
+	public int getProtagonismo() {
+		return protagonismo;
+	}	
+}

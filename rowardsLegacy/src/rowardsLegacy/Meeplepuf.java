@@ -1,6 +1,7 @@
 package rowardsLegacy;
 
 import java.io.Serializable;
+import java.util.Scanner;
 
 public class Meeplepuf extends Mago implements Serializable{
 	private int eficiencia;
@@ -17,10 +18,19 @@ public class Meeplepuf extends Mago implements Serializable{
 		
 	}
 	
+	@Override
+	public void modificarAtributos(Scanner sc) {
+		this.eficiencia = Mago.pedirAtributos(sc, " la eficiencia");
+		this.honor = Mago.pedirAtributos(sc, " el honor");
+		
+		System.out.println("Atributos establecidos correctamente");
+	}
+	
+	
 	public void ultimaVamos() {
 		
 	}
-
+	
 	public int getEficiencia() {
 		return eficiencia;
 	}

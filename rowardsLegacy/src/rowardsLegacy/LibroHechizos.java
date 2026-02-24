@@ -15,14 +15,44 @@ public class LibroHechizos implements Serializable{
 	
 	
 	public boolean anadirHechizo(Hechizo h) {
+		if(this.paginasOcupadas + h.getEspacio() > this.paginasTotales) {
+			System.out.println("No hay paginas libres en el libro " + this.paginasOcupadas + "/" + this.paginasTotales);
+			return false;
+		}
 		
-		return false;
+		for(Hechizo he : hechizos) {
+			if(he.getNombre().equalsIgnoreCase(h.getNombre())) {
+				System.out.println("Ya existe un hechizo llamado " + h.getNombre() + " en el libro");
+				return false;
+			}
+		}
+		
+		this.hechizos.add(h);
+		this.paginasOcupadas += h.getEspacio();
+		System.out.println("Hechizo " + h.getNombre() + " añadido con exito");
+		return true;
 	}
 	
 	
 	public boolean eliminarHechizo(String nHechizo) {
-		
+		for(Hechizo h : hechizos) {
+			if(h.getNombre().equalsIgnoreCase(nHechizo)) {
+				this.paginasOcupadas -= h.getEspacio();
+				this.hechizos.remove(h);
+				return true;
+			}
+		}
 		return false;
+	}
+	
+	
+	public Hechizo obtenerHechizo(String nHehizo) {
+		for(Hechizo h : hechizos) {
+			if(h.getNombre().equalsIgnoreCase(nHehizo)) {
+				return h;
+			}
+		}
+		return null;
 	}
 	
 	
@@ -37,4 +67,14 @@ public class LibroHechizos implements Serializable{
 	public ArrayList<Hechizo> getHechizos(){
 		return hechizos;
 	}
+
+
+	//MEJORARLO CON STRING BUILDER
+	@Override
+	public String toString() {
+		return "LibroHechizos [paginasTotales=" + paginasTotales + ", paginasOcupadas=" + paginasOcupadas
+				+ ", hechizos=" + hechizos + "]";
+	}
+	
+	
 }
