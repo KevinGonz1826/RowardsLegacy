@@ -1,8 +1,8 @@
 package rowardsLegacy;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
@@ -27,7 +27,8 @@ public class Escuela {
 			System.out.println("3. Añadir un mago");
 			System.out.println("4. Modificar un mago");
 			System.out.println("5. Eliminar un mago");
-			System.out.println("6. Volver al menu principal");
+			System.out.println("6. Buscar mago por orden y hechizo");
+			System.out.println("7. Volver al menu principal");
 			System.out.println("Elige una opcion: ");
 			
 			opc = sc.nextInt();
@@ -50,12 +51,15 @@ public class Escuela {
 					eliminarMago();
 					break;
 				case 6:
+					buscarPorOrdenHechizo();
+					break;
+				case 7:
 					System.out.println("Volviendo al menu principal");
 					break;
 				default:
 					System.out.println("Opcion invalida");
 			}
-		}while(opc != 6);
+		}while(opc != 7);
 	}
 	
 	
@@ -121,6 +125,7 @@ public class Escuela {
 		escuela.put(m1.getNombre(), m1);
 		escuela.put(m2.getNombre(), m2);
 	}
+
 	
 	
 	public void guardarDatos() {
@@ -133,16 +138,21 @@ public class Escuela {
 	}
 	
 	
-	/*
+	
+	@SuppressWarnings("unchecked")
 	public void cargarDatos() {
 		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("RowardsPegacy.bkp"))){
+
 			escuela = (HashMap<String, Mago>) ois.readObject();
 			System.out.println("Partida cargada");
-		}catch(FileNotFoundException e) {
-			System.out.println("No se ha encontrado el fichero " + e.getMessage());
+		}catch(IOException e) {
+			System.out.println("Error al leer el backup: " + e.getMessage());
+		}catch(ClassNotFoundException e) {
+			System.out.println(e.getStackTrace());
+			e.printStackTrace();
 		}
 	}
-	*/
+	
 	
 	
 	//METODO PARA PEDIR MAGO
@@ -152,7 +162,7 @@ public class Escuela {
 		
 		Mago m = escuela.get(nombre);
 		if(m == null) {
-			System.out.println(nombre + "no existe en la escuela");
+			System.out.println(nombre + " no existe en la escuela");
 		}
 		return m;
 	}
@@ -170,7 +180,7 @@ public class Escuela {
 	}
 	
 	
-	public void obtenerMago() {
+	private void obtenerMago() {
 		Mago m = pedirMago();
 		if(m != null)
 			System.out.println(m.toString());
@@ -178,7 +188,33 @@ public class Escuela {
 	
 	
 	public void buscarPorOrdenHechizo() {
+		System.out.println("Introduce la orden");
+		System.out.println("Dicendorf, Meeplepuf, Tokenclau o Sleeverin");
+		String orden = sc.nextLine();
 		
+		System.out.println("Ingresa el nombre del hechizo");
+		String hechizo = sc.nextLine();
+		
+		boolean encontrado = false;
+		
+		System.out.println("Magos de " + orden + " con el hechizo " + hechizo);
+		
+		for(Mago m : escuela.values()) {
+			if((orden.equalsIgnoreCase("Dicendorf") && m instanceof Dicendorf) ||
+			(orden.equalsIgnoreCase("Meeplepuf") && m instanceof Meeplepuf) ||
+			(orden.equalsIgnoreCase("Tokenclau") && m instanceof Tokenclau) ||
+			(orden.equalsIgnoreCase("Sleeverin") && m instanceof Sleeverin)){
+				
+				if(m.getLibro().obtenerHechizo(hechizo) != null) {
+					System.out.println("-" + m.getNombre());
+					encontrado = true;
+				}
+			}	
+		}
+		
+		if(!encontrado) {
+			System.out.println("no se encontro nada");
+		}
 	}
 	
 	
@@ -307,8 +343,8 @@ public class Escuela {
 	
 	
 	//GESTION DE HECHIZOS
-	
 	public void mostrarLibros() {
+		if(escuela.isEmpty()) {System.out.println("No se ha encontrado nada"); return;}
 		System.out.println("========LIBROS DE MAGOS========");
 		for(Mago m : escuela.values()) {
 			System.out.println("Mago: " + m.getNombre());
@@ -319,6 +355,7 @@ public class Escuela {
 	public void mostrarlibroMago() {
 		Mago m = pedirMago();
 		
+		if(m == null) {return;}
 		System.out.println(m.getLibro().toString());
 	}
 	
@@ -327,6 +364,7 @@ public class Escuela {
 		Mago m = pedirMago();
 		Hechizo h = null;
 		
+		if(m == null) {return;}
 		System.out.println("Ingresa el nombre: ");
 		String n = sc.nextLine();
 		
@@ -382,6 +420,7 @@ public class Escuela {
 	public void modificarHechizo() {
 		Mago m = pedirMago();
 
+		if(m == null) {return;}
 		for(Hechizo h : m.getLibro().getHechizos()) {
 			System.out.println("-" + h.getNombre());
 		}
@@ -435,6 +474,7 @@ public class Escuela {
 	public void eliminarHechizo() {
 		Mago m = pedirMago();
 		
+		if(m == null) {return;}
 		for(Hechizo h : m.getLibro().getHechizos()) {
 			System.out.println("-" + h.getNombre());
 		}
@@ -451,6 +491,7 @@ public class Escuela {
 	//DUELO DE MAGOS
 	public void dueloMagos() {
 		Mago atacante = pedirMago();
+		if(atacante == null) {return;}
 		
 		System.out.println("Magos para enfrentarse");
 		for(Mago m : escuela.values()) {
@@ -461,6 +502,7 @@ public class Escuela {
 		
 		System.out.println("Elige uno: ");
 		Mago defensor = pedirMago();
+		if(defensor == null) {return;}
 		
 		//VERIFICA SI EL NOMBRE INGRESADO NO SEA EL MISMO QUE EL NOMBRE DEL ATACANTE
 		if(defensor.getNombre().equalsIgnoreCase(atacante.getNombre())) {
@@ -490,7 +532,7 @@ public class Escuela {
 					System.out.println("Tienes " + turnoActual.getTurnosConfuso() + " turnos de confusion");
 					turnoActual.setTurnosConfuso(turnoActual.getTurnosConfuso() - 1);
 					
-					System.out.println("1. Usar habilidad, tienes " + turnoActual.getHabilidad() + "usos");
+					System.out.println("1. Usar habilidad, tienes " + turnoActual.getHabilidad() + " usos");
 					System.out.println("2. Rendirse");
 					
 					int opc = sc.nextInt();
@@ -499,6 +541,7 @@ public class Escuela {
 					switch(opc) {
 						case 1:
 							accion = usarHabilidad(turnoActual, rival);
+							accion = true;
 							break;
 						case 2:
 							System.out.println(turnoActual.getNombre() + " huye del combate");
@@ -515,7 +558,7 @@ public class Escuela {
 					}
 					
 					System.out.println("1. Lanzar hechizo");
-					System.out.println("2. Usar habilidad, tienes " + turnoActual.getHabilidad() + "usos");
+					System.out.println("2. Usar habilidad, tienes " + turnoActual.getHabilidad() + " usos");
 					System.out.println("3. rendirse");
 					
 					int opcion = sc.nextInt();
@@ -588,12 +631,12 @@ public class Escuela {
 			}
 		}
 		
-		System.out.println("\n FIN DEL COMBATE ");
+		System.out.println("\nFIN DEL COMBATE ");
 		if(atacante.getVida() <= 0) {
 			System.out.println("GANADOR: " + defensor.getNombre());
 		}else if(defensor.getVida() <= 0) {
 			System.out.println("GANADOR: " + atacante.getNombre());
-		}else System.out.println("Combate finalizado");
+		}else System.out.println(turnoActual.getHabilidad() + " ha perdido");
 	}
 	
 	
@@ -607,7 +650,7 @@ public class Escuela {
 			if(res > 0 && res > rival.getResistencia()) {
 				int dano = res - rival.getResistencia();
 				rival.setVida(rival.getVida() - dano);
-				System.out.println(rival.getNombre() + " recibe " + dano + "puntos de daño");
+				System.out.println(rival.getNombre() + " recibe " + dano + " puntos de daño");
 			}else {
 				System.out.println("el rival resistio el ataque o fallo el hechizo");
 			}
@@ -617,7 +660,7 @@ public class Escuela {
 			if(res > 0) {
 				int cura = (int) (Math.random() * res + 1);
 				atacante.setVida(atacante.getVida() + cura);
-				System.out.println(atacante.getNombre() + " recupera " + cura + "puntos de salud");
+				System.out.println(atacante.getNombre() + " recupera " + cura + " puntos de salud");
 			}else {
 				System.out.println("El hechizo fallo");
 			}
