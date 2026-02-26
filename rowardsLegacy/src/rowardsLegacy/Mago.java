@@ -8,6 +8,7 @@ public abstract class Mago implements Serializable{
 	protected int afinidad;
 	protected int resistencia;
 	protected double plomo;
+	protected int habilidad;
 	protected LibroHechizos libro;
 	
 	protected int turnosConfuso;
@@ -19,6 +20,7 @@ public abstract class Mago implements Serializable{
 		this.resistencia = resistencia;
 		this.plomo = plomo;
 		this.turnosConfuso = 0;
+		this.habilidad = 0;
 		this.libro = new LibroHechizos(this.afinidad);
 	}	
 	
@@ -78,9 +80,19 @@ public abstract class Mago implements Serializable{
 		this.turnosConfuso = turnosConfuso;
 	}
 
-	public abstract void lanzarHechizos();
+	public abstract int lanzarHechizos(Hechizo h);
 
 	public abstract void modificarAtributos(Scanner sc);
+	
+	public int getHabilidad() {
+		return habilidad;
+	}
+
+	public void setHabilidad(int habilidad) {
+		this.habilidad = habilidad;
+	}
+	
+
 	@Override
 	public String toString() {
 		return "Mago [nombre=" + nombre + ", vida=" + vida + ", afinidad=" + afinidad + ", resistencia=" + resistencia

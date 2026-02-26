@@ -1,0 +1,60 @@
+package rowardsLegacy;
+import java.io.Serializable;
+import java.util.Scanner;
+
+public class Dicendorf extends Mago implements Serializable{
+	private int predisposicion;
+	private int inconsciencia;
+	private int protagonismo;
+	
+	public Dicendorf(String nombre, int vida, int afinidad, int resistencia, double plomo, int predisposicion, int inconsciencia, int protagonismo) {
+		super(nombre, vida, afinidad, resistencia, plomo);
+		this.predisposicion = predisposicion;
+		this.inconsciencia = inconsciencia;
+		this.protagonismo = protagonismo;
+		this.turnosConfuso = 0;
+		this.habilidad = 1;
+	}
+	
+	@Override
+	public void lanzarHechizos() {
+		
+	}
+	
+	
+	@Override
+	public void modificarAtributos(Scanner sc) {
+		this.predisposicion = Mago.pedirAtributos(sc, "la eficiencia");
+		this.inconsciencia = Mago.pedirAtributos(sc, "el honor");
+		
+		System.out.println("Atributos establecidos correctamente");
+	}
+	
+	
+	public void sablazoFactura(Mago m) {
+		int num = (int)(Math.random() * 8 + 1);
+		int num2 = (int)(Math.random() * 8 + 1);
+		
+		int total = num + num2;
+		
+		int lanzador = (int)(Math.random() * 6 + 1);
+		
+		this.vida -= lanzador; 
+		m.setVida(m.getVida() - total);
+		System.out.println(this.nombre + " hace " + total + "puntos de daño a " + m.getNombre());
+		System.out.println(this.nombre + " recibe " + lanzador + " puntos de daño por el efecto de su habilidad");
+	}
+	
+	public int getPredisposicion() {
+		return predisposicion;
+	}
+
+	public int getInconsciencia() {
+		return inconsciencia;
+	}
+
+	public int getProtagonismo() {
+		return protagonismo;
+	}	
+	
+}

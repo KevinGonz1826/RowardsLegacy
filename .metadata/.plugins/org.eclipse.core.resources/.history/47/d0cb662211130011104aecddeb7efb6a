@@ -1,0 +1,40 @@
+package rowardsLegacy;
+
+import java.util.Scanner;
+
+public class Principal {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		Escuela e = new Escuela();
+		
+		int opc;
+		do {
+			System.out.println("=======BIENVENIDO A ROWARDS LEGACY=======");
+			System.out.println("1. Gestion de magos");
+			System.out.println("2. Gestion de libros hechizos");
+			System.out.println("3. Duelo de magos");
+			System.out.println("4. Guardar y salir");
+			System.out.println("Elige una opcion");
+			
+			opc = sc.nextInt();
+			sc.nextLine();
+			
+			switch(opc) {
+				case 1:
+					e.menuMagos();
+					break;
+				case 2:
+					e.menuHechizos();
+					break;
+				case 3:
+					e.dueloMagos();
+					break;
+				case 4:
+					e.guardarDatos();
+					break;
+				default:
+					System.out.println("Opcion invalida");
+			}
+		}while(opc != 4);
+	}
+}

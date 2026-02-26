@@ -11,11 +11,20 @@ public class Meeplepuf extends Mago implements Serializable{
 		super(nombre, vida, afinidad, resistencia, plomo);
 		this.eficiencia = eficiencia;
 		this.honor = honor;
+		this.turnosConfuso = 0;
+		this.habilidad = 1;
 	}
 	
 	@Override
-	public void lanzarHechizos() {
-		
+	public int lanzarHechizos(Hechizo h) {
+		if(h instanceof Sanacion || h instanceof Ofensivo) {
+			return this.eficiencia + this.honor;
+		}else if(h instanceof Confusion) {
+			return this.eficiencia - this.honor;
+		}else if(h instanceof Defensivo) {
+			return this.eficiencia;
+		}
+		return 0;
 	}
 	
 	@Override
@@ -27,8 +36,16 @@ public class Meeplepuf extends Mago implements Serializable{
 	}
 	
 	
-	public void ultimaVamos() {
+	public void ultimaVamos(Mago m) {
+		if(this.habilidad <= 0) {
+			System.out.println("Ya no puedes usar tu habilidad");
+			return;
+		}
+		int confusion = (int)(Math.random() * 4 + 1);
+		m.setTurnosConfuso(m.getTurnosConfuso() + confusion);
+		this.habilidad--;
 		
+		System.out.println(m.getNombre() + " esta confuso por " + confusion + "turnos");
 	}
 	
 	public int getEficiencia() {

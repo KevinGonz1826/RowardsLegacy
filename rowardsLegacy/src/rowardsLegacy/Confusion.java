@@ -1,6 +1,7 @@
 package rowardsLegacy;
+import java.io.Serializable;
 
-public class Confusion extends Hechizo{
+public class Confusion extends Hechizo implements Serializable{
 
 	public Confusion(String nombre, String descripcion, int defensaObtenida, int ataqueCausado, int espacio, double coste) {
 		super(nombre, descripcion, defensaObtenida, ataqueCausado, espacio, coste);

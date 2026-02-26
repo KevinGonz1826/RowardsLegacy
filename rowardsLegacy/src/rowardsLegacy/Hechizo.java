@@ -18,29 +18,52 @@ public abstract class Hechizo implements Serializable{
 		this.espacio = espacio;
 		this.coste = coste;
 	}
-	
-	
-		public String getNombre() {
-			return nombre;
-		}
 
-		public String getDescripcion() {
-			return descripcion;
-		}
+	public String getNombre() {
+		return nombre;
+	}
 
-		public int getDefensaObtenida() {
-			return defensaObtenida;
-		}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-		public int getAtaqueCausado() {
-			return ataqueCausado;
-		}
+	public String getDescripcion() {
+		return descripcion;
+	}
 
-		public int getEspacio() {
-			return espacio;
-		}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 
-		public double getCoste() {
-			return coste;
-		}
+	public int getDefensaObtenida() {
+		return defensaObtenida;
+	}
+
+	public void setDefensaObtenida(int defensaObtenida) {
+		this.defensaObtenida = defensaObtenida;
+	}
+
+	public int getAtaqueCausado() {
+		return ataqueCausado;
+	}
+
+	public void setAtaqueCausado(int ataqueCausado) {
+		this.ataqueCausado = ataqueCausado;
+	}
+
+	public int getEspacio() {
+		return espacio;
+	}
+
+	public void setEspacio(int espacio) {
+		this.espacio = espacio;
+	}
+
+	public double getCoste() {
+		return coste;
+	}
+
+	public void setCoste(double coste) {
+		this.coste = coste;
+	}
 }

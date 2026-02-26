@@ -12,18 +12,52 @@ public class Dicendorf extends Mago implements Serializable{
 		this.predisposicion = predisposicion;
 		this.inconsciencia = inconsciencia;
 		this.protagonismo = protagonismo;
+		this.turnosConfuso = 0;
+		this.habilidad = 1;
 	}
 	
 	@Override
-	public void lanzarHechizos() {
-		
+	public int lanzarHechizos(Hechizo h) {
+		if(h instanceof Sanacion) {
+			return this.predisposicion + this.protagonismo;
+		}else if(h instanceof Ofensivo) {
+			return this.inconsciencia + this.protagonismo;
+		}else if(h instanceof Confusion) {
+			return this.inconsciencia;
+		}else if(h instanceof Defensivo) {
+			return this.protagonismo - this.inconsciencia;
+		}
+		return 0;
 	}
+	
 	
 	@Override
 	public void modificarAtributos(Scanner sc) {
 		this.predisposicion = Mago.pedirAtributos(sc, "la eficiencia");
 		this.inconsciencia = Mago.pedirAtributos(sc, "el honor");
 		
+		System.out.println("Atributos establecidos correctamente");
+	}
+	
+	
+	public void sablazoFactura(Mago m) {
+		if(this.habilidad <= 0) {
+			System.out.println("Ya no puedes usar tu habilidad");
+			return;
+		}
+		
+		int num = (int)(Math.random() * 8 + 1);
+		int num2 = (int)(Math.random() * 8 + 1);
+		
+		int total = num + num2;
+		
+		int lanzador = (int)(Math.random() * 6 + 1);
+		
+		this.vida -= lanzador; 
+		m.setVida(m.getVida() - total);
+		this.habilidad--;
+		System.out.println(this.nombre + " hace " + total + "puntos de daño a " + m.getNombre());
+		System.out.println(this.nombre + " recibe " + lanzador + " puntos de daño por el efecto de su habilidad");
 	}
 	
 	public int getPredisposicion() {

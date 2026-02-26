@@ -1,0 +1,359 @@
+package rowardsLegacy;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Escuela {
+	Scanner sc = new Scanner(System.in);
+	private HashMap<String, Mago> escuela;
+	
+	public Escuela() {
+		this.escuela = new HashMap<String, Mago>();
+	}
+	
+	//FICHEROS
+	
+	public void cargarDatosPrueba() {
+		
+		Mago m1 = new Meeplepuf("Pepe", 100, 80, 20, 15.0, 90, 85);
+		Mago m2 = new Dicendorf("Manolo", 90, 70, 25, 100.0, 75, 80, 90);
+		
+		Hechizo h1 = new Ofensivo("Helada", "Congela al rival", 0, 30, 2, 10);
+		Hechizo h2 = new Sanacion("Cura", "Restaura salud", 25, 0, 1, 15);
+		Hechizo h3 = new Confusion("Neblina", "Ciega al enemigo", 0, 20, 2, 12);
+		
+		m1.getLibro().anadirHechizo(h1);
+		m1.getLibro().anadirHechizo(h2);
+		
+		m2.getLibro().anadirHechizo(h1);
+		m2.getLibro().anadirHechizo(h3);
+		
+		escuela.put(m1.getNombre(), m1);
+		escuela.put(m2.getNombre(), m2);
+	}
+	
+	
+	public void guardarDatos() {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("RowardsLegacy.bkp"))) {
+			oos.writeObject(escuela);
+			System.out.println("Partida guardada correctamente");
+		} catch (Exception e) {
+			System.out.println("Error al guardar los datos: " + e.getMessage());
+		}
+	}
+	
+	
+	public void cargarDatos() {
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("RowardsLegacy.bkp"))){
+			escuela = (HashMap<String, Mago>) ois.readObject();
+			System.out.println("Partida cargada");
+		}catch(FileNotFoundException e) {
+			System.out.println("No se ha encontrado el fichero " + e.getMessage());
+		}
+	}
+	
+	//METODO PARA PEDIR MAGO
+	public Mago pedirMago() {
+		System.out.println("Ingresa el nombre del mago: ");
+		String nombre = sc.nextLine();
+		
+		Mago m = escuela.get(nombre);
+		if(m == null) {
+			System.out.println(nombre + "no existe en la escuela");
+		}
+		return m;
+	}
+	
+	
+	//GESTION DE MAGOS
+	
+	public void mostrarMagos() {
+		if(escuela.isEmpty()) {
+			System.out.println("No existe ningun mago");
+			return;
+		}
+		for(Mago m : escuela.values()) {
+			System.out.println(m.toString());
+		}
+	}
+	
+	
+	public void obtenerMago() {
+		Mago m = pedirMago();
+		if(m != null)
+			System.out.println(m.toString());
+	}
+	
+	
+	public void buscarPorOrdenHechizo() {
+		
+	}
+	
+	
+	public void anadirMago() {
+		Mago mago = null;
+		
+		System.out.println("Nombre: ");
+		String nombre = sc.nextLine();
+		
+		if(escuela.containsKey(nombre)) {
+			System.out.println("Ya existe un mago con el nombre " + nombre);
+		}
+		
+		System.out.println("Vida: ");
+		int v = sc.nextInt();
+		
+		System.out.println("Afinidad: ");
+		int a = sc.nextInt();
+		
+		System.out.println("Resistencia: ");
+		int r = sc.nextInt();
+		
+		System.out.println("Plomo: ");
+		double p = sc.nextDouble();
+		sc.nextLine();
+		
+		System.out.println("Orden: ");
+		String orden = sc.nextLine();
+		
+		switch(orden) {
+			case "Meeplepuf":
+				int eficiencia = Mago.pedirAtributos(sc, "la eficiencia");
+				int honor = Mago.pedirAtributos(sc, "el honor");
+				
+				mago = new Meeplepuf(nombre, v, a, r, p, eficiencia, honor);
+				System.out.println(nombre + " ha ingresado a la escuela");
+				break;
+				
+			case "Dicendorf":
+				int predisposicion = Mago.pedirAtributos(sc, "la predisposicion");
+				int inconsciencia = Mago.pedirAtributos(sc, "la inconsciencia");
+				int protagonismo = Mago.pedirAtributos(sc, "el protagonismo");
+				
+				mago = new Dicendorf(nombre, v, a, r, p, predisposicion, inconsciencia, protagonismo);
+				System.out.println(nombre + " ha ingresado a la escuela");
+				break;
+				
+			case "Tokenclau":
+				int arrojo = Mago.pedirAtributos(sc, "el arrojo");
+				int carisma = Mago.pedirAtributos(sc, "la carisma");
+				
+				mago = new Tokenclau(nombre, v, a, r, p, arrojo, carisma);
+				System.out.println(nombre + " ha ingresado a la escuela");
+				break;
+				
+			case "Sleeverin":
+				int sigilo = Mago.pedirAtributos(sc, "el sigilo");
+				int venenoso = Mago.pedirAtributos(sc, "el veneno");
+				int habla = Mago.pedirAtributos(sc, "el habla con animales");
+				mago = new Sleeverin(nombre, v, a, r, p, sigilo, venenoso, habla);
+				System.out.println(nombre + " ha ingresado a la escuela");
+				break;
+				
+			default:
+				System.out.println("Tipo de mago incorrecto");
+		}
+		
+		escuela.put(nombre, mago);
+	}
+	
+	
+	public void eliminarMago() {
+		Mago m = pedirMago();
+		if(m !=null) {
+			escuela.remove(m.getNombre());
+			System.out.println(m.getNombre() + " se ha eliminado correctamente");
+		}
+	}
+	
+	
+	public void modificarMago() {
+		Mago m = pedirMago();
+		
+		System.out.println("Que atributo deseas modificar?");
+		System.out.println("1. Nombre");
+		System.out.println("2. Vida");
+		System.out.println("3. Afinidad");
+		System.out.println("4. Resistencia");
+		System.out.println("5. Plomo");
+		System.out.println("6. Otros (Datos especificos de cada tipo de mago)");
+		int opc = sc.nextInt();
+		sc.nextLine();
+		
+		switch(opc){
+			case 1:
+				m.setNombre(sc.nextLine());
+				break;
+			
+			case 2:
+				m.setVida(sc.nextInt());
+				break;
+			
+			case 3:
+				m.setAfinidad(sc.nextInt());
+				break;
+			
+			case 4:
+				m.setResistencia(sc.nextInt());
+				break;
+				
+			case 5:
+				m.setPlomo(sc.nextDouble());
+				break;
+				
+			case 6:
+				m.modificarAtributos(sc);
+				break;
+				
+			default:
+				System.out.println("Opcion invalida");
+		}
+	}
+	
+	
+	
+	
+	//GESTION DE HECHIZOS
+	
+	public void mostrarLibros() {
+		System.out.println("========LIBROS DE MAGOS========");
+		for(Mago m : escuela.values()) {
+			System.out.println("Mago: " + m.getNombre());
+			System.out.println(m.getLibro().toString());
+		}
+	}
+	
+	public void mostrarlibroMago() {
+		Mago m = pedirMago();
+		
+		System.out.println(m.getLibro().toString());
+	}
+	
+	
+	public void anadirHechizos() {
+		Mago m = pedirMago();
+		Hechizo h = null;
+		
+		System.out.println("Ingresa el nombre: ");
+		String n = sc.nextLine();
+		
+		System.out.println("Ingresa la descripcion: ");
+		String des = sc.nextLine();
+		
+		System.out.println("Ingresa la defensa obtenida: ");
+		int def = sc.nextInt();
+		
+		System.out.println("Ingresa el ataque causado: ");
+		int at = sc.nextInt();
+		
+		System.out.println("Ingresa el espacio: ");
+		int es = sc.nextInt();
+		
+		System.out.println("Ingresa el coste: ");
+		double cos = sc.nextDouble();
+		
+		System.out.println("Que tipo de hechizo quieres que sea?");
+		System.out.println("1. Sanacion");
+		System.out.println("2. Confusion");
+		System.out.println("3. Defensivo");
+		System.out.println("4. Ofensivo");
+		int opc = sc.nextInt();
+		
+		switch(opc){
+			case 1:
+				h = new Sanacion(n, des, def, at, es, cos);
+				m.getLibro().anadirHechizo(h);
+				break;
+				
+			case 2:
+				h = new Confusion(n, des, def, at, es, cos);
+				m.getLibro().anadirHechizo(h);
+				break;
+				
+			case 3:
+				h = new Defensivo(n, des, def, at, es, cos);
+				m.getLibro().anadirHechizo(h);
+				break;
+				
+			case 4: 
+				h = new Ofensivo(n, des, def, at, es, cos);
+				m.getLibro().anadirHechizo(h);
+				break;
+			
+			default:
+				System.out.println("Opcion invalida");
+		}
+	}
+	
+	
+	public void modificarHechizo() {
+		Mago m = pedirMago();
+
+		for(Hechizo h : m.getLibro().getHechizos()) {
+			System.out.println("-" + h.getNombre());
+		}
+		
+		System.out.println("Ingresa el nombre del hechizo que quieres modificar");
+		String nombre = sc.nextLine();
+		
+		Hechizo h = m.getLibro().obtenerHechizo(nombre);
+		System.out.println("Que atributo deseas modificar?");
+		System.out.println("1. Nombre");
+		System.out.println("2. Descripcion");
+		System.out.println("3. Defensa obtenida");
+		System.out.println("4. Ataque causado");
+		System.out.println("5. Espacio");
+		System.out.println("6. Coste");
+		
+		int opc = sc.nextInt();
+		sc.nextLine();
+		
+		switch(opc) {
+			case 1:
+				h.setNombre(sc.nextLine());
+				break;
+				
+			case 2:
+				h.setDescripcion(sc.nextLine());
+				break;
+			
+			case 3:
+				h.setDefensaObtenida(sc.nextInt());
+				break;
+				
+			case 4:
+				h.setAtaqueCausado(sc.nextInt());
+				break;
+				
+			case 5:
+				h.setEspacio(sc.nextInt());
+				break;
+				
+			case 6:
+				h.setCoste(sc.nextDouble());
+				break;
+				
+			default:
+				System.out.println("Opcion invalida");
+		}
+	}
+	
+	
+	public void eliminarHechizo() {
+		Mago m = pedirMago();
+		
+		for(Hechizo h : m.getLibro().getHechizos()) {
+			System.out.println("-" + h.getNombre());
+		}
+		
+		System.out.println("Ingresa el nombre del hechizo que quieres eliminar: ");
+		String nombre = sc.nextLine();
+		
+		m.getLibro().eliminarHechizo(nombre);
+	}
+}

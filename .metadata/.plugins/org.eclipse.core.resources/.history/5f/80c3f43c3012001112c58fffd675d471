@@ -1,0 +1,56 @@
+package rowardsLegacy;
+
+import java.io.Serializable;
+import java.util.Scanner;
+
+public class Tokenclau extends Mago implements Serializable{
+	private int arrojo;
+	private int carisma;
+	
+	public Tokenclau(String nombre, int vida, int afinidad, int resistencia, double plomo, int arrojo, int carisma) {
+		super(nombre, vida, afinidad, resistencia, plomo);
+		this.arrojo = arrojo;
+		this.carisma = carisma;
+		this.turnosConfuso = 0;
+		this.habilidad = 2;
+	}
+	
+	@Override
+	public void lanzarHechizos() {
+		
+	}
+	
+	@Override
+	public void modificarAtributos(Scanner sc) {
+		this.arrojo = Mago.pedirAtributos(sc, " el arrojo");
+		this.carisma = Mago.pedirAtributos(sc, " la carisma");
+		
+		System.out.println("Atributos establecidos correctamente");
+	}
+	
+	
+	public void losPelos() {
+		int efecto = (int)(Math.random()*2);
+		
+		if(efecto == 0) {
+			int res1 = (int)(Math.random() * 6 + 1);
+			int res2 = (int)(Math.random() * 6 + 1);
+			int total = res1 + res2;
+			this.vida += total;
+			System.out.println(this.nombre + " recupera" + total + " puntos de vida");
+		}else {
+			int afinid = (int)(Math.random() * 8 + 1);
+			this.afinidad += afinid;
+			System.out.println(this.nombre + " recupera" + afinid + " puntos de afinidad");
+		}
+	}
+	
+
+	public int getArrojo() {
+		return arrojo;
+	}
+	
+	public int getCarisma() {
+		return carisma;
+	}
+}

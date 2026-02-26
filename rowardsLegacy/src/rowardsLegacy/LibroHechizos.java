@@ -39,6 +39,7 @@ public class LibroHechizos implements Serializable{
 			if(h.getNombre().equalsIgnoreCase(nHechizo)) {
 				this.paginasOcupadas -= h.getEspacio();
 				this.hechizos.remove(h);
+				System.out.println("Se elimino " + nHechizo + " del libro");
 				return true;
 			}
 		}
